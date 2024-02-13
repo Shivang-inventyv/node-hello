@@ -1,0 +1,55 @@
+name: Sample Workflow Using SHA Digest
+
+on:
+  workflow_run:
+    workflows: ["CI for Node.js"]
+    types:
+      - completed
+
+jobs:
+  use_sha_digest:
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Debug directory contents
+      run: |
+          ls -al ./artifacts
+          pwd
+    # - name: Create artifacts folder (if missing)
+    #   run: |
+    #     mkdir -p ./artifacts
+
+    - name: Install GitHub CLI
+      run: |
+        type -p curl >/dev/null || (sudo apt update && sudo apt install curl -y)
+        curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+        && sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+        && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+        && sudo apt update \
+        && sudo apt install gh -y
+    - name: Download SHA Digest Artifact
+      run: |
+        gh run download 7885789632 --name sha_digestttt --dir ./artifacts
+      # run: |
+      #   curl -sSfL \
+      #     -o ./artifacts/sha_digestttt.zip \
+      #     -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+      #     "https://api.github.com/repos/${{ github.repository }}/actions/runs/62/artifacts"
+      #   unzip -qq -d ./artifacts ./artifacts/sha_digestttt.zip
+      # uses: actions/download-artifact@v2
+      # with:   
+      #   name: sha_digestttt
+      #   path: ./artifacts
+      #   run-number: 62
+          
+
+    - name: Commit and Push Artifact
+      run: |
+        pwd
+        git add ./  # Correct the filename if different
+        git commit -m "Add artifact from workflow"
+        git push
