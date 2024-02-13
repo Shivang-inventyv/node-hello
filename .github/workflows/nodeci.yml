@@ -3,24 +3,44 @@
 
 name: CI for Node.js
 
+# on:
+#   push:
+#     branches:
+#       - "master"
+#   pull_request:
+#     branches:
+#       - "master"
 on:
-  push:
-    branches:
-      - "master"
-  pull_request:
-    branches:
-      - "master"
+ workflow_dispatch:
+ #    inputs:
+      # firstName:
+      #  description: enter your first name
+      #  type: string
+      #  required: true
+      # choice:
+      #   description: 'Select an option'
+      #   required: true
+      #   type: choice
+      #   options:
+      #     - Option 1
+      #     - Option 2
+      #     - Option 3
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
+    # environment: "prod"
     
     strategy:
       matrix:
         node-version: ['16.x']
      
     steps:
+    # - name: greeting to user
+    #   run: |
+    #    echo " Good Morning  ${{ github.event.inputs.choice}} !"
+    
     - name: Checkout Repository
       uses: actions/checkout@v3
 
@@ -33,36 +53,70 @@ jobs:
       run: npm install
 
     - name: Build Docker Image
-      run: docker build -t raj456/nodeci:latest .
-
+      run: docker build -t shivang1012/node-hello .
+      
     - name: Login to Docker Hub
       uses: docker/login-action@v3
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASS }}
+        password: ${{ secrets.DOCKER_ACCESS_TOKEN}}
 
     - name: Push Docker Image to Docker Hub
-      run: docker push raj456/nodeci:latest
+      run: docker push shivang1012/node-hello
 
+    # - name: Get SHA Digest
+    #   run: |
+    #     SHA_DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' shivang1012/node-hello)
+    #     echo "SHA Digest: $SHA_DIGEST"
+    #     echo "$SHA_DIGEST" > $GITHUB_WORKSPACE/sha_digest.txt
     - name: Get SHA Digest
       run: |
-        SHA_DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' raj456/nodeci:latest)
-        echo "SHA Digest: $SHA_DIGEST"
-        echo "$SHA_DIGEST" > $GITHUB_WORKSPACE/sha_digest.txt
-
+          SHA_DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' shivang1012/node-hello)
+          echo "SHA Digest: $SHA_DIGEST"
+          echo "$SHA_DIGEST" > $GITHUB_WORKSPACE/sha_digest.txt
+          
     - name: Commit SHA Digest File
       run: |
-        git config --global user.email "rajchauhaninventyv@gmail.com"
-        git config --global user.name "Raj-inventyv"
+        git config --global user.email "shivangpithadiya1012@gmail.com"
+        git config --global user.name "ShivangPithadiya"
         git add $GITHUB_WORKSPACE/sha_digest.txt
         git commit -m "Add SHA Digest file"
         git push
+    
 
+    - name: Create Artifact of SHA Digest File
+      uses: actions/upload-artifact@v3
+      with:
+        name: sha_digestttt
+        path: ./sha_digest.txt
+    
+    # - name: Create artifacts folder (if missing)
+    #   run: |
+    #     mkdir -p ./artifacts
+
+    # - name: Download SHA Digest Artifact
+    #   uses: actions/download-artifact@v3
+    #   with:
+    #       name: sha_digestttt
+    #       path: ./artifacts
+
+
+    # - name: Debug directory contents
+    #   run: |
+    #       ls -al ./artifacts
+    #       pwd
+          
+
+    # - name: Commit and Push Artifact
+    #   run: |
+    #     pwd
+    #     git add ./  # Correct the filename if different
+    #     git commit -m "Add artifact from workflow"
+    #     git push
+        
     - name: debug
       run: |
         ls -al
         pwd
-    - name: Run container
-      run:  docker build --build-arg MY_VARIABLE="${{ env.MY_VARIABLE }}" -t raj456/nodeci:latest .
-
-     
+    # - name: Run container
+    #   run:  docker build --build-arg MY_VARIABLE="${{ env.MY_VARIABLE }}" -t raj456/nodeci:latest .
