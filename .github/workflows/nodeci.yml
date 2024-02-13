@@ -107,12 +107,12 @@ jobs:
     #       pwd
           
 
-    - name: Commit and Push Artifact
-      run: |
-        pwd
-        git add ./  # Correct the filename if different
-        git commit -m "Add artifact from workflow"
-        git push
+    # - name: Commit and Push Artifact
+    #   run: |
+    #     pwd
+    #     git add ./  # Correct the filename if different
+    #     git commit -m "Add artifact from workflow"
+    #     git push
         
     - name: debug
       run: |
