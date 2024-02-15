@@ -37,6 +37,8 @@ jobs:
         node-version: ['16.x']
      
     steps:
+
+    
     # - name: greeting to user
     #   run: |
     #    echo " Good Morning  ${{ github.event.inputs.firstName}} !"
@@ -44,6 +46,15 @@ jobs:
     
     - name: Checkout Repository
       uses: actions/checkout@v3
+
+    # - name: Checkout Repository 1
+    #   uses: actions/checkout@v2
+    #   with:
+    #     repository: Shivang-inventyv/cicd 
+    #     ref: main  
+
+    # - name: Execute Script
+    #   run: bash script.sh  # Replace with the name of your script file
 
     - name: Set up Node.js
       uses: actions/setup-node@v3
