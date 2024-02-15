@@ -39,6 +39,7 @@ jobs:
     steps:
     # - name: greeting to user
     #   run: |
+    #    echo " Good Morning  ${{ github.event.inputs.firstName}} !"
     #    echo " Good Morning  ${{ github.event.inputs.choice}} !"
     
     - name: Checkout Repository
