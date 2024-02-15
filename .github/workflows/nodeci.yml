@@ -54,7 +54,7 @@ jobs:
     #     ref: main  
 
     # - name: Execute Script
-    #   run: bash script.sh  # Replace with the name of your script file
+    #   run: sh script.sh  # Replace with the name of your script file
 
     - name: Set up Node.js
       uses: actions/setup-node@v3
