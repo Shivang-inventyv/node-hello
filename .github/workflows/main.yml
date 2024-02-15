@@ -33,7 +33,7 @@ jobs:
         && sudo apt install gh -y
     - name: Download SHA Digest Artifact
       run: |
-        gh run download 7886107885 --name sha_digestttt --dir ./artifacts
+        gh run download 7911217948 --name sha_digestttt --dir ./artifacts
       # run: |
       #   curl -sSfL \
       #     -o ./artifacts/sha_digestttt.zip \
