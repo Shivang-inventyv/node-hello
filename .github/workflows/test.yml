@@ -1,0 +1,52 @@
+name: Docker Build and Push
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    strategy:
+     matrix:
+      node-version: ['16.x']
+        
+    steps:
+    
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Docker Image
+        run: docker build -t shivang1012/node-hello .
+
+      - name: Extract Docker credentials from secret
+        id: extract-credentials
+        run: |
+          USERNAME=$(echo "$DOCKER_JSON_SECRET" | jq -r '.username')
+          PASSWORD=$(echo "$DOCKER_JSON_SECRET" | jq -r '.password')
+          echo "::set-output name=username::$USERNAME"
+          echo "::set-output name=password::$PASSWORD"
+        env:
+          DOCKER_JSON_SECRET: ${{ secrets.LOGIN_CREDENTIALS }}
+
+      - name: Log in to Docker Hub
+        run: echo "${{ steps.extract-credentials.outputs.username }}" | docker login -u "${{ steps.extract-credentials.outputs.username }}" --password-stdin
+        env:
+          DOCKER_USERNAME: ${{ steps.extract-credentials.outputs.username }}
+          DOCKER_PASSWORD: ${{ steps.extract-credentials.outputs.password }}
+
+      - name: Build Docker image
+        run: docker build -t shivang1012/node-hello
+
+      - name: Push Docker image
+        run: docker push shivang1012/node-hello
