@@ -57,7 +57,7 @@ jobs:
           password: ${{ steps.extract-credentials.outputs.password }}
         
       - name: Build Docker image
-        run: docker build -t harshp0207/test-image
+        run: docker build -t harshp0207/test-image .
 
       - name: Push Docker image
         run: docker push harshp0207/test-image
