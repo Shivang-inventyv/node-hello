@@ -39,6 +39,10 @@ jobs:
           echo "::set-output name=password::$PASSWORD"
         env:
           DOCKER_JSON_SECRET: ${{ secrets.LOGIN_CREDENTIAL }}
+      - name: check username-password\
+        run: |
+          echo "${{steps.extract-credentials.outputs.username}}"
+          echo "${{ steps.extract-credentials.outputs.password }}"
 
       - name: Log in to Docker Hub
         run: echo "${{ steps.extract-credentials.outputs.username }}" | docker login -u "${{ steps.extract-credentials.outputs.username }}" --password-stdin
