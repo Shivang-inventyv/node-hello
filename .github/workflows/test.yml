@@ -43,8 +43,8 @@ jobs:
       - name: Log in to Docker Hub
         run: echo "${{ steps.extract-credentials.outputs.username }}" | docker login -u "${{ steps.extract-credentials.outputs.username }}" --password-stdin
         env:
-          DOCKER_USERNAME: ${{ steps.extract-credentials.outputs.username }}
-          DOCKER_PASSWORD: ${{ steps.extract-credentials.outputs.password }}
+          USERNAME: ${{ steps.extract-credentials.outputs.username }}
+          PASSWORD: ${{ steps.extract-credentials.outputs.password }}
 
       - name: Build Docker image
         run: docker build -t shivang1012/node-hello
