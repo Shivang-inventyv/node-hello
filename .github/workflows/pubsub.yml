@@ -1,0 +1,23 @@
+name: Publish message to Pub/Sub
+
+on: push # Trigger on push events to any branch
+
+jobs:
+  publish-message:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - id: auth
+        name: Authenticate to Google Cloud Platform
+        uses: google-github-actions/auth@v0
+        with:
+          credentials: ${{ secrets.GCP_SA_KEY }}
+
+      - id: publish
+        name: Publish a message to Pub/Sub
+        uses: miraliumre/actions-pubsub@v1
+        with:
+          project_id: pub-sub-416205
+          topic_name: Docker_registory-
+          message: 'This message was published by shivang.'
