@@ -3,18 +3,22 @@ name: Conditional Workflow
 on:
   workflow_dispatch:
     inputs:
-      dropdown:
-        description: 'Select true to run the workflow'
+      choice:
+        description: 'Select an option'
         required: true
-        default: 'false'
+        default: 'true'
+        options: ['true', 'false']
 
 jobs:
   conditional_job:
     runs-on: ubuntu-latest
-    if: github.event.inputs.dropdown == 'true'
+    if: github.event.inputs.choice == 'true'
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
+      
+      # Add your workflow steps here
+
 
       - name: test-commands
         run: |
