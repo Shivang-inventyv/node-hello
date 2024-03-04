@@ -18,6 +18,6 @@ jobs:
         name: Publish a message to Pub/Sub
         uses: miraliumre/actions-pubsub@v1
         with:
-          project_id: pub-sub-416205
-          topic_name: Docker_registory-
-          message: 'This message was published by shivang.'
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          topic_name: ${{ secrets.PUBSUB_TOPIC_NAME }}
+          message: 'This message was published from a GitHub Actions workflow.'
