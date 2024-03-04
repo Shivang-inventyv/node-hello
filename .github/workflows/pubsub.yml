@@ -14,12 +14,12 @@ jobs:
         with:
           credentials_json: '${{ secrets.GCP_SA_KEY }}'
 
-      - name: Install dependencies
-        uses: google-github-actions/setup-gcloud@v1
-        with:
-          project-id: ${{ secrets.GCP_PROJECT_ID }}
-          service-account-key: ${{ secrets.GCP_SA_KEY }}
-          install-components: "pubsub"
+      # - name: Install dependencies
+      #   uses: google-github-actions/setup-gcloud@v1
+      #   with:
+      #     project-id: ${{ secrets.GCP_PROJECT_ID }}
+      #     service-account-key: ${{ secrets.GCP_SA_KEY }}
+      #     install-components: "pubsub"
 
       - name: Publish message
         run: |
