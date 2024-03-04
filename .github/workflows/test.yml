@@ -61,3 +61,19 @@ jobs:
 
       - name: Push Docker image
         run: docker push harshp0207/test-image
+
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+
+      - name: Set up Google Cloud
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          project_id: pub-sub-416205
+          export_default_credentials: true
+
+      - name: Publish message to Pub/Sub
+        run: |
+          gcloud pubsub topics publish Docker_registory --message='{"branch":"main","commit":"${{ github.sha }}"}'
