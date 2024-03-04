@@ -1,28 +1,33 @@
-name: Conditional Workflow
+name: CI for Node.js
 
 on:
-  workflow_dispatch:
+ # push:
+ #  branches:
+ #      - master
+ 
+   workflow_dispatch:
     inputs:
-      choice:
-        description: 'Select an option'
-        required: true
-        options: ['true', 'false']
+      run_workflow:
+         description: 'Select an option'
+         required: true
+         type: choice
+         options:
+           - "true"
+           - "false"
+           
+
+           
 
 jobs:
-  conditional_job:
+  build:
+    if: github.event.inputs.run_workflow == 'true'
     runs-on: ubuntu-latest
-    if: github.event.inputs.choice == 'true'
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      
-      # Add your workflow steps here
-
-
-
-
-      - name: test-commands
+      - name: test
         run: |
-          ls -a
-      
-   
+          la -a
+    #       "Shivang") Message="Pithadiya" ;;
+    #       *) Message="Unknown option selected" ;;
+    #       esac
+    #       echo "$Message"
