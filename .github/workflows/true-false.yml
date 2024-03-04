@@ -1,4 +1,4 @@
-name: CI for Node.js
+name: true-false condition
 
 on:
  # push:
@@ -12,8 +12,8 @@ on:
          required: true
          type: choice
          options:
-           - "true"
-           - "false"
+           - 'true'
+           - 'false'
            
 
            
@@ -24,10 +24,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
       - name: test
         run: |
           la -a
-    #       "Shivang") Message="Pithadiya" ;;
-    #       *) Message="Unknown option selected" ;;
-    #       esac
-    #       echo "$Message"
+          
