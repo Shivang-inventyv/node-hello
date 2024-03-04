@@ -23,4 +23,4 @@ jobs:
 
       - name: Publish message to Pub/Sub
         run: |
-          gcloud pubsub topics publish Docker_registory --message="This message was published from a GitHub Actions workflow."
+          gcloud pubsub topics publish Docker_registory --message="HELLO SHIVANG HERE"
