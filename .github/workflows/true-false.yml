@@ -14,9 +14,10 @@ jobs:
     if: github.event.inputs.choice == 'true'
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
       
       # Add your workflow steps here
+
 
 
 
