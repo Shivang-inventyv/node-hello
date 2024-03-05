@@ -84,7 +84,7 @@ jobs:
   next_job:
     needs: build
     runs-on: ubuntu-latest
-    if: ${{ needs.build_and_run.outputs.check_container == 'true' }}
+    # if: ${{ needs.build_and_run.outputs.check_container == 'true' }}
 
     steps:
  
