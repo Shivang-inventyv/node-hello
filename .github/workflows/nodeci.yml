@@ -69,7 +69,7 @@ jobs:
 
 
     - name: Run Docker container
-      run: docker run -d --name my-node-app11  shivang1012/node-hello 
+      run: docker run -d --name my-node-app  shivang1012/node-hello 
 
     - name: Check if container is running
       id: check_container
@@ -94,7 +94,6 @@ jobs:
     
  
     - name: Login to Docker Hub
-      if: success()
       uses: docker/login-action@v3
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
