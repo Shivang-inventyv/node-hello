@@ -3,28 +3,28 @@
 
 name: CI for Node.js
 
-on:
-  push:
-    branches:
-      - "master"
-  pull_request:
-    branches:
-      - "master"
 # on:
-#  workflow_dispatch:
-#  #    inputs:
-#       # firstName:
-#       #  description: enter your first name
-#       #  type: string
-#       #  required: true
-#       # choice:
-#       #   description: 'Select an option'
-#       #   required: true
-#       #   type: choice
-#       #   options:
-#       #     - Option 1
-#       #     - Option 2
-#       #     - Option 3
+#   push:
+#     branches:
+#       - "master"
+#   pull_request:
+#     branches:
+#       - "master"
+on:
+ workflow_dispatch:
+    inputs:
+      firstName:
+       description: enter your first name
+       type: string
+       required: true
+      # choice:
+      #   description: 'Select an option'
+      #   required: true
+      #   type: choice
+      #   options:
+      #     - Option 1
+      #     - Option 2
+      #     - Option 3
 
 jobs:
   build:
